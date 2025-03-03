@@ -3,15 +3,13 @@ import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from "react-live";
 
 const BasicComponent = () => {
-	const liveCodeExample = `(() => {
-  function Greeting(props) {
-    // Try editing this code!
-    return <h1>Hello, {props.name || ".NET Developer"}!</h1>;
-  }
-  
-  // Return the component to render
-  return <Greeting name="React Learner" />;
-})()`;
+	const liveCodeExample = `function Greeting(props) {
+  // Try editing this code!
+  return <h1>Hello, {props.name || ".NET Developer"}!</h1>;
+}
+
+// Render the component
+render(<Greeting name="React Learner" />);`;
 
 	return (
 		<div>
@@ -94,7 +92,7 @@ const BasicComponent = () => {
 
 			<div className="mt-6 border border-green-200 bg-green-50 p-4 rounded-lg">
 				<h3 className="font-bold mb-2">Live Editable Example:</h3>
-				<LiveProvider code={liveCodeExample} scope={{}} noInline={false}>
+				<LiveProvider code={liveCodeExample} scope={{}} noInline={true}>
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 						<div className="bg-gray-800 rounded p-2">
 							<LiveEditor style={{ fontFamily: "monospace" }} />
