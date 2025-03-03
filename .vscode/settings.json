@@ -1,0 +1,75 @@
+{
+	"java.configuration.updateBuildConfiguration": "automatic",
+	"editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+	"editor.formatOnPaste": false, // required
+	"editor.formatOnType": false, // required
+	"editor.formatOnSave": true, // optional
+	"editor.formatOnSaveMode": "file", // required to format on save
+	"editor.codeActionsOnSave": {
+		"source.removeUnusedImports": "explicit"
+	},
+	"files.autoSave": "onFocusChange", // optional but recommended
+	"vs-code-prettier-eslint.prettierLast": false,
+	"[typescriptreact]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[json]": {
+		"editor.defaultFormatter": "vscode.json-language-features"
+	},
+	"todo-tree.highlights.useColourScheme": true,
+	"todo-tree.highlights.defaultHighlight": {
+		"icon": "alert",
+		"type": "text",
+		"foreground": "red",
+		"background": "white",
+		"opacity": 50,
+		"iconColour": "blue"
+	},
+	"todo-tree.highlights.customHighlight": {
+		"TODO": {
+			"foreground": "white",
+			"background": "#34b0f7",
+			"icon": "gear",
+			"iconColour": "#34b0f7",
+			"type": "tag-and-comment",
+			"gutterIcon": true
+		},
+		"REGION": {
+			"foreground": "white",
+			"background": "#108d44",
+			"icon": "code-square",
+			"iconColour": "#23b660",
+			"type": "tag-and-comment",
+			"gutterIcon": true
+		},
+		"FIXME": {
+			"background": "red",
+			"foreground": "white",
+			"iconColour": "red",
+			"gutterIcon": true,
+			"type": "tag-and-comment"
+		},
+		"DEBUG": {
+			"background": "#ffff47",
+			"foreground": "black",
+			"iconColour": "yellow",
+			"gutterIcon": true,
+			"type": "tag-and-comment"
+		}
+	},
+	"todo-tree.general.tags": [
+		"BUG",
+		"HACK",
+		"FIXME",
+		"TODO",
+		"XXX",
+		"[ ]",
+		"[x]",
+		"REGION",
+		"DEBUG"
+	],
+	"java.compile.nullAnalysis.mode": "disabled"
+}
