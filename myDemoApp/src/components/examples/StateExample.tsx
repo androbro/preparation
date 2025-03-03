@@ -1,4 +1,7 @@
-import { useState } from "react";
+import React from "react";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from "react-live";
 
 // This example demonstrates React's state management - how components manage their internal data
 
@@ -8,8 +11,70 @@ import { useState } from "react";
 // - ViewState in WebForms
 
 const StateExample = () => {
-	// Using state in our demo component
-	const [count, setCount] = useState(0);
+	const useStateHookExample = `function Counter() {
+  // useState returns a pair:
+  // 1. The current state value (count)
+  // 2. A function to update it (setCount)
+  const [count, setCount] = useState(0);
+  
+  return (
+    <div>
+      <p>You clicked {count} times</p>
+      <button 
+        onClick={() => setCount(count + 1)}
+        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+      >
+        Click me
+      </button>
+    </div>
+  );
+}
+
+// Render the component
+render(<Counter />);`;
+
+	const multipleStateExample = `function UserForm() {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log({ firstName, lastName, email });
+  };
+  
+  return (
+    <form onSubmit={handleSubmit}>
+      <input 
+        placeholder="First Name"
+        value={firstName} 
+        onChange={e => setFirstName(e.target.value)}
+        className="block my-2 p-2 border border-gray-300 rounded w-full"
+      />
+      <input 
+        placeholder="Last Name"
+        value={lastName} 
+        onChange={e => setLastName(e.target.value)}
+        className="block my-2 p-2 border border-gray-300 rounded w-full"
+      />
+      <input 
+        placeholder="Email"
+        value={email} 
+        onChange={e => setEmail(e.target.value)}
+        className="block my-2 p-2 border border-gray-300 rounded w-full"
+      />
+      <button 
+        type="submit" 
+        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+      >
+        Submit
+      </button>
+    </form>
+  );
+}
+
+// Render the component
+render(<UserForm />);`;
 
 	return (
 		<div>
@@ -29,26 +94,22 @@ const StateExample = () => {
 
 			<div className="border p-4 rounded shadow-sm mb-6">
 				<h3 className="font-bold mb-2">useState Hook Example</h3>
-				<div className="bg-gray-100 p-3 rounded mb-3 font-mono text-sm overflow-auto">
-					{`import { useState } from 'react';
-
-function Counter() {
-  // useState returns a pair:
-  // 1. The current state value (count)
-  // 2. A function to update it (setCount)
-  const [count, setCount] = useState(0);
-  
-  return (
-    <div>
-      <p>You clicked {count} times</p>
-      <button onClick={() => setCount(count + 1)}>
-        Click me
-      </button>
-    </div>
-  );
-}`}
-				</div>
-				<p className="text-sm text-gray-600">
+				<LiveProvider
+					code={useStateHookExample}
+					scope={{ useState: React.useState, React }}
+					noInline={true}
+				>
+					<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+						<div className="bg-gray-800 rounded p-2">
+							<LiveEditor style={{ fontFamily: "monospace" }} />
+							<LiveError className="text-red-500 text-sm mt-2" />
+						</div>
+						<div className="border p-4 bg-white rounded">
+							<LivePreview />
+						</div>
+					</div>
+				</LiveProvider>
+				<p className="text-sm text-gray-600 mt-2">
 					Similar to a property with getter/setter in C#, but with automatic UI
 					updates
 				</p>
@@ -56,49 +117,24 @@ function Counter() {
 
 			<div className="border p-4 rounded shadow-sm mb-6">
 				<h3 className="font-bold mb-2">Multiple State Variables</h3>
-				<div className="bg-gray-100 p-3 rounded mb-3 font-mono text-sm overflow-auto">
-					{`function UserForm() {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log({ firstName, lastName, email });
-  };
-  
-  return (
-    <form onSubmit={handleSubmit}>
-      <input value={firstName} onChange={e => setFirstName(e.target.value)} />
-      <input value={lastName} onChange={e => setLastName(e.target.value)} />
-      <input value={email} onChange={e => setEmail(e.target.value)} />
-      <button type="submit">Submit</button>
-    </form>
-  );
-}`}
-				</div>
-				<p className="text-sm text-gray-600">
+				<LiveProvider
+					code={multipleStateExample}
+					scope={{ useState: React.useState, React }}
+					noInline={true}
+				>
+					<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+						<div className="bg-gray-800 rounded p-2">
+							<LiveEditor style={{ fontFamily: "monospace" }} />
+							<LiveError className="text-red-500 text-sm mt-2" />
+						</div>
+						<div className="border p-4 bg-white rounded">
+							<LivePreview />
+						</div>
+					</div>
+				</LiveProvider>
+				<p className="text-sm text-gray-600 mt-2">
 					Similar to multiple properties in a ViewModel class
 				</p>
-			</div>
-
-			<div className="mt-6 border border-green-200 bg-green-50 p-4 rounded-lg">
-				<h3 className="font-bold mb-2">Live Example:</h3>
-				<div className="p-4 bg-white rounded border flex flex-col items-center">
-					<p className="text-xl mb-4">You clicked {count} times</p>
-					<button
-						onClick={() => setCount(count + 1)}
-						className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-					>
-						Click me
-					</button>
-					<button
-						onClick={() => setCount(0)}
-						className="px-4 py-2 mt-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400"
-					>
-						Reset
-					</button>
-				</div>
 			</div>
 
 			<div className="mt-6 bg-yellow-50 border border-yellow-200 p-4 rounded-lg">
@@ -108,50 +144,50 @@ function Counter() {
 						<h4 className="font-semibold mb-1">
 							C# with INotifyPropertyChanged:
 						</h4>
-						<div className="font-mono bg-gray-100 p-2 text-sm">
+						<SyntaxHighlighter language="csharp" style={vscDarkPlus}>
 							{`public class CounterViewModel : INotifyPropertyChanged
-								{
-										private int _count;
-										
-										public int Count
-										{
-												get => _count;
-												set
-												{
-														_count = value;
-														OnPropertyChanged();
-												}
-										}
-										
-										public ICommand IncrementCommand { get; }
-										
-										public CounterViewModel()
-										{
-												IncrementCommand = new RelayCommand(
-														() => Count++
-												);
-										}
-										
-										// INotifyPropertyChanged implementation...
-								}`}
-						</div>
+{
+    private int _count;
+    
+    public int Count
+    {
+        get => _count;
+        set
+        {
+            _count = value;
+            OnPropertyChanged();
+        }
+    }
+    
+    public ICommand IncrementCommand { get; }
+    
+    public CounterViewModel()
+    {
+        IncrementCommand = new RelayCommand(
+            () => Count++
+        );
+    }
+    
+    // INotifyPropertyChanged implementation...
+}`}
+						</SyntaxHighlighter>
 					</div>
 					<div>
 						<h4 className="font-semibold mb-1">React Equivalent:</h4>
-						<div className="font-mono bg-gray-100 p-2 text-sm">
+						<SyntaxHighlighter language="jsx" style={vscDarkPlus}>
 							{`function Counter() {
-									const [count, setCount] = useState(0);
-									
-									return (
-										<div>
-											<p>Count: {count}</p>
-											<button onClick={() => setCount(count + 1)}>
-												Increment
-											</button>
-										</div>
-									);
-							}`}
-						</div>
+    const [count, setCount] = useState(0);
+    
+    return (
+        <div>
+            <p>Count: {count}</p>
+            <button onClick={() => setCount(count + 1)}>
+                Increment
+            </button>
+        </div>
+    );
+}`}
+						</SyntaxHighlighter>
 					</div>
 				</div>
 				<p className="mt-3 text-sm">
