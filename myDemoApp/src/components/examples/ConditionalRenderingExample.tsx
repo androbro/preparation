@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 // This example demonstrates different ways to conditionally render content in React
 
@@ -62,18 +64,13 @@ const ConditionalRenderingExample: React.FC = () => {
 		}
 	]);
 
-	// Loading state for demo
+	// States and handlers...
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-
-	// Error state for demo
 	const [error, setError] = useState<string | null>(null);
-
-	// Selected product for details view
 	const [selectedProductId, setSelectedProductId] = useState<number | null>(
 		null
 	);
 
-	// Get the selected product
 	const selectedProduct = selectedProductId
 		? products.find((p) => p.id === selectedProductId) || null
 		: null;
@@ -158,33 +155,33 @@ const ConditionalRenderingExample: React.FC = () => {
 					1. If-Else using Ternary Operator
 				</h3>
 
-				<div className="p-4 bg-gray-100 rounded">
-					{/* Ternary operator for isLoading */}
-					{isLoading ? (
-						<div className="text-center p-4">
-							<div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-blue-500 border-r-transparent"></div>
-							<p className="mt-2">Loading products...</p>
-						</div>
-					) : error ? (
-						<div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-							<p>{error}</p>
-						</div>
-					) : (
-						<p>Products are ready to be displayed</p>
-					)}
-				</div>
-
-				<div className="mt-3 text-sm">
-					<p>Code example:</p>
-					<pre className="bg-gray-50 p-2 rounded overflow-x-auto mt-1">
-						{`{isLoading ? (
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+					<div>
+						<SyntaxHighlighter language="jsx" style={vscDarkPlus}>
+							{`{isLoading ? (
   <div>Loading...</div>
 ) : error ? (
   <div>{error}</div>
 ) : (
   <p>Products are ready</p>
 )}`}
-					</pre>
+						</SyntaxHighlighter>
+					</div>
+					<div className="p-4 bg-gray-100 rounded">
+						{/* Ternary operator for isLoading */}
+						{isLoading ? (
+							<div className="text-center p-4">
+								<div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-blue-500 border-r-transparent"></div>
+								<p className="mt-2">Loading products...</p>
+							</div>
+						) : error ? (
+							<div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+								<p>{error}</p>
+							</div>
+						) : (
+							<p>Products are ready to be displayed</p>
+						)}
+					</div>
 				</div>
 			</div>
 
@@ -192,30 +189,10 @@ const ConditionalRenderingExample: React.FC = () => {
 			<div className="mb-6 p-4 border rounded-lg">
 				<h3 className="font-semibold mb-3">2. Logical && Operator</h3>
 
-				<div className="p-4 bg-gray-100 rounded">
-					{/* Using && for conditional rendering */}
-					{isLoading && (
-						<div className="text-center p-4">
-							<div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-blue-500 border-r-transparent"></div>
-							<p className="mt-2">Loading with && operator...</p>
-						</div>
-					)}
-
-					{error && (
-						<div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-							<p>{error}</p>
-						</div>
-					)}
-
-					{!isLoading && !error && (
-						<p>Content is visible when not loading and no errors</p>
-					)}
-				</div>
-
-				<div className="mt-3 text-sm">
-					<p>Code example:</p>
-					<pre className="bg-gray-50 p-2 rounded overflow-x-auto mt-1">
-						{`{isLoading && (
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+					<div>
+						<SyntaxHighlighter language="jsx" style={vscDarkPlus}>
+							{`{isLoading && (
   <div>Loading...</div>
 )}
 
@@ -226,26 +203,42 @@ const ConditionalRenderingExample: React.FC = () => {
 {!isLoading && !error && (
   <div>Content is visible</div>
 )}`}
-					</pre>
-				</div>
+						</SyntaxHighlighter>
 
-				<div className="mt-3 p-2 bg-yellow-50 rounded text-sm">
-					<p className="font-medium">⚠️ Warning:</p>
-					<p>
-						Be careful with the && operator if the left side could be 0. For
-						example:
-					</p>
-					<pre className="bg-gray-50 p-2 rounded overflow-x-auto mt-1">
-						{`{products.length && <ProductList products={products} />} // Wrong!`}
-					</pre>
-					<p className="mt-1">
-						If products.length is 0, React will render the number 0, not
-						nothing.
-					</p>
-					<p className="mt-1">Correct way:</p>
-					<pre className="bg-gray-50 p-2 rounded overflow-x-auto mt-1">
-						{`{products.length > 0 && <ProductList products={products} />}`}
-					</pre>
+						<div className="mt-3 p-2 bg-yellow-50 rounded text-sm">
+							<p className="font-medium">⚠️ Warning:</p>
+							<p>
+								Be careful with the && operator if the left side could be 0:
+							</p>
+							<SyntaxHighlighter language="jsx" style={vscDarkPlus}>
+								{`// Wrong - will render "0" when length is 0
+{products.length && <ProductList products={products} />}
+
+// Correct way
+{products.length > 0 && <ProductList products={products} />}`}
+							</SyntaxHighlighter>
+						</div>
+					</div>
+
+					<div className="p-4 bg-gray-100 rounded">
+						{/* Using && for conditional rendering */}
+						{isLoading && (
+							<div className="text-center p-4">
+								<div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-blue-500 border-r-transparent"></div>
+								<p className="mt-2">Loading with && operator...</p>
+							</div>
+						)}
+
+						{error && (
+							<div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+								<p>{error}</p>
+							</div>
+						)}
+
+						{!isLoading && !error && (
+							<p>Content is visible when not loading and no errors</p>
+						)}
+					</div>
 				</div>
 			</div>
 
@@ -255,34 +248,10 @@ const ConditionalRenderingExample: React.FC = () => {
 					3. Immediate Return (Guard Clauses)
 				</h3>
 
-				<div className="p-4 bg-gray-100 rounded">
-					{/* Using a render function with early returns */}
-					{(() => {
-						if (isLoading) {
-							return (
-								<div className="text-center p-4">
-									<div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-blue-500 border-r-transparent"></div>
-									<p className="mt-2">Loading with early return...</p>
-								</div>
-							);
-						}
-
-						if (error) {
-							return (
-								<div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-									<p>{error}</p>
-								</div>
-							);
-						}
-
-						return <p>Main content after guard clauses</p>;
-					})()}
-				</div>
-
-				<div className="mt-3 text-sm">
-					<p>Code example:</p>
-					<pre className="bg-gray-50 p-2 rounded overflow-x-auto mt-1">
-						{`// Using an immediately-invoked function expression (IIFE)
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+					<div>
+						<SyntaxHighlighter language="jsx" style={vscDarkPlus}>
+							{`// Using an immediately-invoked function expression (IIFE)
 {(() => {
   if (isLoading) {
     return <div>Loading...</div>;
@@ -294,7 +263,32 @@ const ConditionalRenderingExample: React.FC = () => {
   
   return <p>Main content</p>;
 })()}`}
-					</pre>
+						</SyntaxHighlighter>
+					</div>
+
+					<div className="p-4 bg-gray-100 rounded">
+						{/* Using a render function with early returns */}
+						{(() => {
+							if (isLoading) {
+								return (
+									<div className="text-center p-4">
+										<div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-blue-500 border-r-transparent"></div>
+										<p className="mt-2">Loading with early return...</p>
+									</div>
+								);
+							}
+
+							if (error) {
+								return (
+									<div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+										<p>{error}</p>
+									</div>
+								);
+							}
+
+							return <p>Main content after guard clauses</p>;
+						})()}
+					</div>
 				</div>
 			</div>
 
@@ -304,39 +298,10 @@ const ConditionalRenderingExample: React.FC = () => {
 					4. Switch/Case Pattern with Component Variables
 				</h3>
 
-				<div className="p-4 bg-gray-100 rounded">
-					{/* Using variables to hold components */}
-					{(() => {
-						let content: React.ReactNode;
-
-						switch (true) {
-							case isLoading:
-								content = (
-									<div className="text-center p-4">
-										<div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-blue-500 border-r-transparent"></div>
-										<p className="mt-2">Loading with switch-case...</p>
-									</div>
-								);
-								break;
-							case error !== null:
-								content = (
-									<div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-										<p>{error}</p>
-									</div>
-								);
-								break;
-							default:
-								content = <p>Default content from switch statement</p>;
-						}
-
-						return content;
-					})()}
-				</div>
-
-				<div className="mt-3 text-sm">
-					<p>Code example:</p>
-					<pre className="bg-gray-50 p-2 rounded overflow-x-auto mt-1">
-						{`let content: React.ReactNode;
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+					<div>
+						<SyntaxHighlighter language="jsx" style={vscDarkPlus}>
+							{`let content: React.ReactNode;
 
 switch (true) {
   case isLoading:
@@ -350,7 +315,37 @@ switch (true) {
 }
 
 return content;`}
-					</pre>
+						</SyntaxHighlighter>
+					</div>
+
+					<div className="p-4 bg-gray-100 rounded">
+						{/* Using variables to hold components */}
+						{(() => {
+							let content: React.ReactNode;
+
+							switch (true) {
+								case isLoading:
+									content = (
+										<div className="text-center p-4">
+											<div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-blue-500 border-r-transparent"></div>
+											<p className="mt-2">Loading with switch-case...</p>
+										</div>
+									);
+									break;
+								case error !== null:
+									content = (
+										<div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+											<p>{error}</p>
+										</div>
+									);
+									break;
+								default:
+									content = <p>Default content from switch statement</p>;
+							}
+
+							return content;
+						})()}
+					</div>
 				</div>
 			</div>
 
@@ -358,71 +353,64 @@ return content;`}
 			<div className="mb-6 p-4 border rounded-lg">
 				<h3 className="font-semibold mb-3">5. Conditional Styling and Props</h3>
 
-				<div className="p-4 bg-gray-100 rounded">
-					<h4 className="font-medium mb-2">
-						Product List with Conditional Styles
-					</h4>
-					<ul className="divide-y">
-						{products.map((product) => (
-							<li
-								key={product.id}
-								className={`p-3 ${
-									product.inStock
-										? "bg-white hover:bg-gray-50"
-										: "bg-gray-100 text-gray-500"
-								} ${
-									selectedProductId === product.id
-										? "border-l-4 border-blue-500 pl-2"
-										: ""
-								}`}
-							>
-								<div className="flex justify-between">
-									<div>
-										<span className="font-medium">{product.name}</span>
-										<span className="ml-3">${product.price.toFixed(2)}</span>
-										{/* Conditional rendering with && */}
-										{!product.inStock && (
-											<span className="ml-2 text-red-500 text-sm">
-												Out of stock
-											</span>
-										)}
-									</div>
-									<div>
-										<button
-											onClick={() => toggleProductStock(product.id)}
-											className={`px-2 py-1 text-xs rounded mr-2 ${
-												product.inStock
-													? "bg-red-100 text-red-800 hover:bg-red-200"
-													: "bg-green-100 text-green-800 hover:bg-green-200"
-											}`}
-										>
-											{product.inStock ? "Mark Out of Stock" : "Mark In Stock"}
-										</button>
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+					<div>
+						<SyntaxHighlighter language="jsx" style={vscDarkPlus}>
+							{`<div>
+  <span>{product.name}</span>
+  {!product.inStock && (
+    <span className="text-red-500">Out of stock</span>
+  )}
+</div>`}
+						</SyntaxHighlighter>
+					</div>
+
+					<div className="p-4 bg-gray-100 rounded">
+						<h4 className="font-medium mb-2">
+							Product List with Conditional Styles
+						</h4>
+						<ul className="divide-y">
+							{products.slice(0, 3).map((product) => (
+								<li
+									key={product.id}
+									className={`p-3 ${
+										product.inStock
+											? "bg-white hover:bg-gray-50"
+											: "bg-gray-100 text-gray-500"
+									} ${
+										selectedProductId === product.id
+											? "border-l-4 border-blue-500 pl-2"
+											: ""
+									}`}
+								>
+									<div className="flex justify-between">
+										<div>
+											<span className="font-medium">{product.name}</span>
+											<span className="ml-3">${product.price.toFixed(2)}</span>
+											{/* Conditional rendering with && */}
+											{!product.inStock && (
+												<span className="ml-2 text-red-500 text-sm">
+													Out of stock
+												</span>
+											)}
+										</div>
 										<button
 											onClick={() => selectProduct(product.id)}
 											className="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded hover:bg-blue-200"
 										>
 											Details
 										</button>
+										<button
+											onClick={() => toggleProductStock(product.id)}
+											className="px-2 py-1 text-xs bg-gray-200 text-gray-800 rounded hover:bg-gray-300 ml-2"
+										>
+											Toggle Stock
+										</button>
 									</div>
-								</div>
-							</li>
-						))}
-					</ul>
-				</div>
-
-				<div className="mt-3 text-sm">
-					<p>Code example for conditional classes and rendering:</p>
-					<pre className="bg-gray-50 p-2 rounded overflow-x-auto mt-1">
-						{`<div className={\`p-3 \${
-  product.inStock ? 'bg-white' : 'bg-gray-100 text-gray-500'
-}\`}>
-  <span>{product.name}</span>
-  {!product.inStock && (
-    <span className="text-red-500">Out of stock</span>
-  )}
-</div>`}
-					</pre>
+								</li>
+							))}
+						</ul>
+					</div>
 				</div>
 			</div>
 
@@ -432,26 +420,10 @@ return content;`}
 					6. Extract Complex Conditional Logic to Components
 				</h3>
 
-				<div className="p-4 bg-gray-100 rounded">
-					{/* Using separate components for conditional rendering */}
-					{isLoading ? (
-						<LoadingIndicator />
-					) : error ? (
-						<ErrorMessage message={error} />
-					) : selectedProduct ? (
-						<ProductDetails
-							product={selectedProduct}
-							onBack={() => setSelectedProductId(null)}
-						/>
-					) : (
-						<p>Select a product to see details</p>
-					)}
-				</div>
-
-				<div className="mt-3 text-sm">
-					<p>Code example:</p>
-					<pre className="bg-gray-50 p-2 rounded overflow-x-auto mt-1">
-						{`// Extract complex rendering to separate components
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+					<div>
+						<SyntaxHighlighter language="jsx" style={vscDarkPlus}>
+							{`// Extract complex rendering to separate components
 {isLoading ? (
   <LoadingIndicator />
 ) : error ? (
@@ -464,89 +436,45 @@ return content;`}
 ) : (
   <p>Select a product to see details</p>
 )}`}
-					</pre>
-				</div>
-			</div>
-
-			<div className="mt-6 bg-yellow-50 border border-yellow-200 p-4 rounded-lg">
-				<h3 className="font-bold mb-2">.NET Comparison:</h3>
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-					<div>
-						<h4 className="font-semibold mb-1">ASP.NET MVC Razor:</h4>
-						<div className="font-mono bg-gray-100 p-2 text-sm overflow-auto">
-							{`@model ProductViewModel
-
-<!-- If-else conditional rendering -->
-@if (Model.IsLoading)
-{
-    <div class="loading">Loading...</div>
-}
-else if (Model.Error != null)
-{
-    <div class="error">@Model.Error</div>
-}
-else
-{
-    <div class="products">
-        <!-- Foreach loop with embedded conditions -->
-        @foreach (var product in Model.Products)
-        {
-            <div class="@(product.InStock ? "" : "out-of-stock")">
-                <span>@product.Name</span>
-                @if (!product.InStock)
-                {
-                    <span class="badge">Out of stock</span>
-                }
-            </div>
-        }
-    </div>
-}`}
-						</div>
+						</SyntaxHighlighter>
+						<SyntaxHighlighter language="jsx" style={vscDarkPlus}>
+							{`// Within a products.map() function
+products.map(product => (
+  <div className={\`p-3 \${
+    product.inStock ? 'bg-white' : 'bg-gray-100 text-gray-500'
+  }\`}>
+    <span>{product.name}</span>
+    {!product.inStock && (
+      <span className="text-red-500">Out of stock</span>
+    )}
+  </div>
+))`}
+						</SyntaxHighlighter>
 					</div>
-					<div>
-						<h4 className="font-semibold mb-1">React Equivalent:</h4>
-						<div className="font-mono bg-gray-100 p-2 text-sm overflow-auto">
-							{`function ProductView({ model }) {
-  // If-else conditional rendering
-  if (model.isLoading) {
-    return <div className="loading">Loading...</div>;
-  } else if (model.error) {
-    return <div className="error">{model.error}</div>;
-  } else {
-    return (
-      <div className="products">
-        {/* Map instead of foreach */}
-        {model.products.map(product => (
-          <div 
-            key={product.id}
-            className={product.inStock ? "" : "out-of-stock"}
-          >
-            <span>{product.name}</span>
-            {!product.inStock && (
-              <span className="badge">Out of stock</span>
-            )}
-          </div>
-        ))}
-      </div>
-    );
-  }
-}`}
-						</div>
+
+					<div className="p-4 bg-gray-100 rounded">
+						{/* Using separate components for conditional rendering */}
+						{isLoading ? (
+							<LoadingIndicator />
+						) : error ? (
+							<ErrorMessage message={error} />
+						) : selectedProduct ? (
+							<ProductDetails
+								product={selectedProduct}
+								onBack={() => setSelectedProductId(null)}
+							/>
+						) : (
+							<p>Select a product from the list above to see details</p>
+						)}
 					</div>
 				</div>
-				<p className="mt-3 text-sm">
-					Both approaches allow for conditional rendering, but React uses
-					JavaScript expressions while Razor uses special @ directives. React's
-					approach is more integrated with the programming language itself.
-				</p>
 			</div>
-
 			<div className="mt-6 bg-yellow-50 border border-yellow-200 p-4 rounded-lg">
 				<h3 className="font-bold mb-2">WPF/XAML Comparison:</h3>
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 					<div>
 						<h4 className="font-semibold mb-1">WPF XAML:</h4>
-						<div className="font-mono bg-gray-100 p-2 text-sm overflow-auto">
+						<SyntaxHighlighter language="xml" style={vscDarkPlus}>
 							{`<Grid>
     <!-- Visibility based on boolean property -->
     <ProgressBar 
@@ -577,11 +505,11 @@ else
         </ListView.ItemTemplate>
     </ListView>
 </Grid>`}
-						</div>
+						</SyntaxHighlighter>
 					</div>
 					<div>
 						<h4 className="font-semibold mb-1">React Equivalent:</h4>
-						<div className="font-mono bg-gray-100 p-2 text-sm overflow-auto">
+						<SyntaxHighlighter language="jsx" style={vscDarkPlus}>
 							{`function ProductView({ isLoading, products }) {
   return (
     <div>
@@ -605,7 +533,7 @@ else
     </div>
   );
 }`}
-						</div>
+						</SyntaxHighlighter>
 					</div>
 				</div>
 				<p className="mt-3 text-sm">
