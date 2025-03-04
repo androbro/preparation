@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 // This example demonstrates React's Effects system and component lifecycle
 
 // In .NET terms, React effects are similar to:
@@ -145,29 +146,62 @@ const EffectsExample: React.FC = () => {
 			{/* Timer example */}
 			<div className="border rounded-lg p-6 mb-6">
 				<h3 className="font-semibold text-lg mb-3">Timer Example</h3>
-				<div className="bg-gray-100 p-4 rounded-lg mb-4 text-center">
-					<div className="text-4xl font-bold mb-2">{count}</div>
-					<div className="flex space-x-4 justify-center">
-						<button
-							onClick={() => setIsRunning(!isRunning)}
-							className={`px-4 py-2 rounded-lg ${
-								isRunning
-									? "bg-red-500 hover:bg-red-600 text-white"
-									: "bg-green-500 hover:bg-green-600 text-white"
-							}`}
-						>
-							{isRunning ? "Stop" : "Start"}
-						</button>
-						<button
-							onClick={() => setCount(0)}
-							className="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-lg"
-							disabled={isRunning}
-						>
-							Reset
-						</button>
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+					<div>
+						<SyntaxHighlighter language="jsx" style={vscDarkPlus}>
+							{`// Timer implementation with useEffect
+const [count, setCount] = useState(0);
+const [isRunning, setIsRunning] = useState(false);
+
+// Effect with cleanup for timer
+useEffect(() => {
+  let timerId;
+
+  // Only start if isRunning is true
+  if (isRunning) {
+    console.log("Starting timer...");
+    timerId = window.setInterval(() => {
+      setCount(prevCount => prevCount + 1);
+    }, 1000);
+  }
+
+  // Cleanup function runs when:
+  // 1. Component unmounts
+  // 2. isRunning changes
+  // 3. Before next effect execution
+  return () => {
+    if (timerId) {
+      console.log("Cleaning up timer...");
+      clearInterval(timerId);
+    }
+  };
+}, [isRunning]); // Only re-run when isRunning changes`}
+						</SyntaxHighlighter>
 					</div>
-					<div className="mt-2 text-sm text-gray-600">
-						Open your browser console to see effect logs
+					<div className="bg-gray-100 p-4 rounded-lg text-center">
+						<div className="text-4xl font-bold mb-2">{count}</div>
+						<div className="flex space-x-4 justify-center">
+							<button
+								onClick={() => setIsRunning(!isRunning)}
+								className={`px-4 py-2 rounded-lg ${
+									isRunning
+										? "bg-red-500 hover:bg-red-600 text-white"
+										: "bg-green-500 hover:bg-green-600 text-white"
+								}`}
+							>
+								{isRunning ? "Stop" : "Start"}
+							</button>
+							<button
+								onClick={() => setCount(0)}
+								className="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-lg"
+								disabled={isRunning}
+							>
+								Reset
+							</button>
+						</div>
+						<div className="mt-2 text-sm text-gray-600">
+							Open your browser console to see effect logs
+						</div>
 					</div>
 				</div>
 				<div className="text-sm">
@@ -186,43 +220,98 @@ const EffectsExample: React.FC = () => {
 			{/* Data fetching example */}
 			<div className="border rounded-lg p-6 mb-6">
 				<h3 className="font-semibold text-lg mb-3">Data Fetching Example</h3>
-				<div className="mb-4">
-					<div className="mb-2">Select a user ID to fetch:</div>
-					<div className="flex space-x-2">
-						{[1, 2, 3, 4, 5].map((id) => (
-							<button
-								key={id}
-								onClick={() => setUserId(id)}
-								className={`px-3 py-1 rounded ${
-									userId === id
-										? "bg-blue-500 text-white"
-										: "bg-gray-200 hover:bg-gray-300"
-								}`}
-							>
-								User {id}
-							</button>
-						))}
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+					<div>
+						<SyntaxHighlighter language="jsx" style={vscDarkPlus}>
+							{`// Data fetching with useEffect
+const [userId, setUserId] = useState(1);
+const [userData, setUserData] = useState(null);
+const [isLoading, setIsLoading] = useState(false);
+const [error, setError] = useState(null);
+
+// Effect runs when userId changes
+useEffect(() => {
+  const fetchUser = async () => {
+    setIsLoading(true);
+    setError(null);
+    
+    try {
+      // Simulate API call with delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // In real app, this would be a fetch call:
+      // const response = await fetch(\`/api/users/\${userId}\`);
+      // const data = await response.json();
+      
+      // Simulate error for user 3
+      if (userId === 3) {
+        throw new Error("User not found");
+      }
+      
+      // Mock data lookup
+      const user = mockUsers.find(u => u.id === userId);
+      if (user) {
+        setUserData(user);
+      } else {
+        throw new Error("User not found");
+      }
+    } catch (err) {
+      setError(err.message);
+      setUserData(null);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
+  fetchUser();
+  
+  // Cleanup function
+  return () => {
+    console.log("Cleaning up previous fetch");
+    // In real app: abortController.abort();
+  };
+}, [userId]); // Only re-fetch when userId changes`}
+						</SyntaxHighlighter>
+					</div>
+					<div>
+						<div className="mb-4">
+							<div className="mb-2">Select a user ID to fetch:</div>
+							<div className="flex space-x-2">
+								{[1, 2, 3, 4, 5].map((id) => (
+									<button
+										key={id}
+										onClick={() => setUserId(id)}
+										className={`px-3 py-1 rounded ${
+											userId === id
+												? "bg-blue-500 text-white"
+												: "bg-gray-200 hover:bg-gray-300"
+										}`}
+									>
+										User {id}
+									</button>
+								))}
+							</div>
+						</div>
+
+						<div className="bg-gray-100 p-4 rounded-lg">
+							{isLoading ? (
+								<div className="text-center py-4">Loading...</div>
+							) : error ? (
+								<div className="text-center text-red-500 py-4">{error}</div>
+							) : userData ? (
+								<div>
+									<h4 className="font-semibold">User Details:</h4>
+									<p>ID: {userData.id}</p>
+									<p>Name: {userData.name}</p>
+								</div>
+							) : (
+								<div className="text-center text-gray-500 py-4">
+									Select a user to load data
+								</div>
+							)}
+						</div>
 					</div>
 				</div>
-
-				<div className="bg-gray-100 p-4 rounded-lg mb-4">
-					{isLoading ? (
-						<div className="text-center py-4">Loading...</div>
-					) : error ? (
-						<div className="text-center text-red-500 py-4">{error}</div>
-					) : userData ? (
-						<div>
-							<h4 className="font-semibold">User Details:</h4>
-							<p>ID: {userData.id}</p>
-							<p>Name: {userData.name}</p>
-						</div>
-					) : (
-						<div className="text-center text-gray-500 py-4">
-							Select a user to load data
-						</div>
-					)}
-				</div>
-
 				<div className="text-sm">
 					<p className="mb-2">This example demonstrates:</p>
 					<ul className="list-disc list-inside space-y-1">
@@ -241,7 +330,8 @@ const EffectsExample: React.FC = () => {
 					<div>
 						<h4 className="font-semibold mb-1">Run Once (ComponentDidMount)</h4>
 						<div className="bg-gray-100 p-3 rounded mb-3 font-mono text-sm">
-							{`useEffect(() => {
+							<SyntaxHighlighter language="jsx" style={vscDarkPlus}>
+								{`useEffect(() => {
   // Runs once when component mounts
   console.log('Component mounted');
   
@@ -250,13 +340,15 @@ const EffectsExample: React.FC = () => {
     console.log('Component unmounted');
   };
 }, []); // Empty dependency array`}
+							</SyntaxHighlighter>
 						</div>
 					</div>
 
 					<div>
 						<h4 className="font-semibold mb-1">Run on State Change</h4>
 						<div className="bg-gray-100 p-3 rounded mb-3 font-mono text-sm">
-							{`useEffect(() => {
+							<SyntaxHighlighter language="jsx" style={vscDarkPlus}>
+								{`useEffect(() => {
   // Runs when userId changes
   console.log('Fetching user:', userId);
   
@@ -265,6 +357,7 @@ const EffectsExample: React.FC = () => {
     console.log('Cleaning up previous fetch');
   };
 }, [userId]); // Dependency array`}
+							</SyntaxHighlighter>
 						</div>
 					</div>
 				</div>
@@ -276,7 +369,8 @@ const EffectsExample: React.FC = () => {
 					<div>
 						<h4 className="font-semibold mb-1">ASP.NET Page Lifecycle:</h4>
 						<div className="font-mono bg-gray-100 p-2 text-sm">
-							{`public partial class MyPage : Page
+							<SyntaxHighlighter language="csharp" style={vscDarkPlus}>
+								{`public partial class MyPage : Page
 {
     // Similar to useEffect with empty dependency array
     protected void Page_Load(object sender, EventArgs e)
@@ -301,12 +395,14 @@ const EffectsExample: React.FC = () => {
         base.Dispose(disposing);
     }
 }`}
+							</SyntaxHighlighter>
 						</div>
 					</div>
 					<div>
 						<h4 className="font-semibold mb-1">React Equivalent:</h4>
 						<div className="font-mono bg-gray-100 p-2 text-sm">
-							{`function MyComponent() {
+							<SyntaxHighlighter language="jsx" style={vscDarkPlus}>
+								{`function MyComponent() {
   // Similar to Page_Load with !IsPostBack
   useEffect(() => {
     // Runs once on mount (first load only)
@@ -327,6 +423,7 @@ const EffectsExample: React.FC = () => {
   // Component render
   return <div>...</div>;
 }`}
+							</SyntaxHighlighter>
 						</div>
 					</div>
 				</div>
@@ -338,7 +435,8 @@ const EffectsExample: React.FC = () => {
 					<div>
 						<h4 className="font-semibold mb-1">WPF/MVVM Property Changed:</h4>
 						<div className="font-mono bg-gray-100 p-2 text-sm">
-							{`public class UserViewModel : INotifyPropertyChanged
+							<SyntaxHighlighter language="csharp" style={vscDarkPlus}>
+								{`public class UserViewModel : INotifyPropertyChanged
 {
     private int _userId;
     
@@ -384,12 +482,14 @@ const EffectsExample: React.FC = () => {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }`}
+							</SyntaxHighlighter>
 						</div>
 					</div>
 					<div>
 						<h4 className="font-semibold mb-1">React Equivalent:</h4>
 						<div className="font-mono bg-gray-100 p-2 text-sm">
-							{`function UserComponent() {
+							<SyntaxHighlighter language="jsx" style={vscDarkPlus}>
+								{`function UserComponent() {
   const [userId, setUserId] = useState(1);
   const [userData, setUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -419,6 +519,7 @@ const EffectsExample: React.FC = () => {
   // Component render
   return <div>...</div>;
 }`}
+							</SyntaxHighlighter>
 						</div>
 					</div>
 				</div>
