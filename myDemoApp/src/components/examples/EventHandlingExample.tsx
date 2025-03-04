@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 // This example demonstrates React's event handling system
 
@@ -67,7 +69,7 @@ const EventHandlingExample = () => {
 
 			<div className="border p-4 rounded shadow-sm mb-6">
 				<h3 className="font-bold mb-2">Basic Event Handling</h3>
-				<div className="bg-gray-100 p-3 rounded mb-3 font-mono text-sm overflow-auto">
+				<SyntaxHighlighter language="jsx" style={vscDarkPlus} className="mb-3">
 					{`function ClickHandler() {
   const handleClick = () => {
     console.log('Button was clicked!');
@@ -79,7 +81,7 @@ const EventHandlingExample = () => {
     </button>
   );
 }`}
-				</div>
+				</SyntaxHighlighter>
 				<p className="text-sm text-gray-600">
 					Similar to button_Click event handler in WinForms
 				</p>
@@ -87,7 +89,7 @@ const EventHandlingExample = () => {
 
 			<div className="border p-4 rounded shadow-sm mb-6">
 				<h3 className="font-bold mb-2">Event with Parameters</h3>
-				<div className="bg-gray-100 p-3 rounded mb-3 font-mono text-sm overflow-auto">
+				<SyntaxHighlighter language="jsx" style={vscDarkPlus} className="mb-3">
 					{`function Counter() {
   const [count, setCount] = useState(0);
   
@@ -103,7 +105,7 @@ const EventHandlingExample = () => {
     </div>
   );
 }`}
-				</div>
+				</SyntaxHighlighter>
 				<p className="text-sm text-gray-600">
 					Using arrow functions to pass parameters to event handlers
 				</p>
@@ -112,60 +114,167 @@ const EventHandlingExample = () => {
 			<div className="mt-6 border border-green-200 bg-green-50 p-4 rounded-lg">
 				<h3 className="font-bold mb-2">Live Examples:</h3>
 
-				<div className="p-4 bg-white rounded border mb-4">
-					<h4 className="font-semibold mb-2">Basic Click Event</h4>
-					<button
-						onClick={handleClick}
-						className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-					>
-						Click me
-					</button>
-					<p className="mt-2">{message}</p>
-				</div>
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+					<div>
+						<h4 className="font-semibold mb-2">Basic Click Event Code:</h4>
+						<SyntaxHighlighter language="jsx" style={vscDarkPlus}>
+							{`// Simple event handler
+const handleClick = () => {
+  setMessage("Button was clicked!");
+};
 
-				<div className="p-4 bg-white rounded border mb-4">
-					<h4 className="font-semibold mb-2">Mouse Move Event</h4>
-					<div
-						onMouseMove={handleMouseMove}
-						className="h-24 bg-gray-200 rounded flex items-center justify-center cursor-pointer"
-					>
-						Move mouse here
+return (
+  <>
+    <button 
+      onClick={handleClick}
+      className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+    >
+      Click me
+    </button>
+    <p className="mt-2">{message}</p>
+  </>
+);`}
+						</SyntaxHighlighter>
 					</div>
-					<p className="mt-2">
-						Position: X: {position.x}, Y: {position.y}
-					</p>
+					<div className="p-4 bg-white rounded border">
+						<h4 className="font-semibold mb-2">Basic Click Event</h4>
+						<button
+							onClick={handleClick}
+							className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+						>
+							Click me
+						</button>
+						<p className="mt-2">{message}</p>
+					</div>
 				</div>
 
-				<div className="p-4 bg-white rounded border">
-					<h4 className="font-semibold mb-2">Form Events</h4>
-					<form onSubmit={handleSubmit} className="space-y-3">
-						<div>
-							<label className="block text-sm mb-1">Name:</label>
-							<input
-								type="text"
-								name="name"
-								value={formData.name}
-								onChange={handleInputChange}
-								className="w-full p-2 border rounded"
-							/>
-						</div>
-						<div>
-							<label className="block text-sm mb-1">Email:</label>
-							<input
-								type="email"
-								name="email"
-								value={formData.email}
-								onChange={handleInputChange}
-								className="w-full p-2 border rounded"
-							/>
-						</div>
-						<button
-							type="submit"
-							className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+					<div>
+						<h4 className="font-semibold mb-2">Mouse Move Event Code:</h4>
+						<SyntaxHighlighter language="jsx" style={vscDarkPlus}>
+							{`const [position, setPosition] = useState({ x: 0, y: 0 });
+
+const handleMouseMove = (event) => {
+  setPosition({
+    x: event.clientX,
+    y: event.clientY
+  });
+};
+
+return (
+  <>
+    <div
+      onMouseMove={handleMouseMove}
+      className="h-24 bg-gray-200 rounded flex items-center justify-center cursor-pointer"
+    >
+      Move mouse here
+    </div>
+    <p className="mt-2">
+      Position: X: {position.x}, Y: {position.y}
+    </p>
+  </>
+);`}
+						</SyntaxHighlighter>
+					</div>
+					<div className="p-4 bg-white rounded border">
+						<h4 className="font-semibold mb-2">Mouse Move Event</h4>
+						<div
+							onMouseMove={handleMouseMove}
+							className="h-24 bg-gray-200 rounded flex items-center justify-center cursor-pointer"
 						>
-							Submit
-						</button>
-					</form>
+							Move mouse here
+						</div>
+						<p className="mt-2">
+							Position: X: {position.x}, Y: {position.y}
+						</p>
+					</div>
+				</div>
+
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+					<div>
+						<h4 className="font-semibold mb-2">Form Events Code:</h4>
+						<SyntaxHighlighter language="jsx" style={vscDarkPlus}>
+							{`const [formData, setFormData] = useState({
+  name: "",
+  email: ""
+});
+
+const handleInputChange = (event) => {
+  const { name, value } = event.target;
+  setFormData({
+    ...formData,
+    [name]: value
+  });
+};
+
+const handleSubmit = (event) => {
+  event.preventDefault();
+  setMessage(\`Form submitted with: \${formData.name} (\${formData.email})\`);
+};
+
+return (
+  <form onSubmit={handleSubmit} className="space-y-3">
+	<div>
+		<label className="block text-sm mb-1">Name:</label>
+		<input
+			type="text"
+			name="name"
+			value={formData.name}
+			onChange={handleInputChange}
+			className="w-full p-2 border rounded"
+		/>
+	</div>
+	<div>
+		<label className="block text-sm mb-1">Email:</label>
+		<input
+			type="email"
+			name="email"
+			value={formData.email}
+			onChange={handleInputChange}
+			className="w-full p-2 border rounded"
+		/>
+	</div>
+	<button
+		type="submit"
+		className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+	>
+		Submit
+	</button>
+</form>
+);`}
+						</SyntaxHighlighter>
+					</div>
+					<div className="p-4 bg-white rounded border">
+						<h4 className="font-semibold mb-2">Form Events</h4>
+						<form onSubmit={handleSubmit} className="space-y-3">
+							<div>
+								<label className="block text-sm mb-1">Name:</label>
+								<input
+									type="text"
+									name="name"
+									value={formData.name}
+									onChange={handleInputChange}
+									className="w-full p-2 border rounded"
+								/>
+							</div>
+							<div>
+								<label className="block text-sm mb-1">Email:</label>
+								<input
+									type="email"
+									name="email"
+									value={formData.email}
+									onChange={handleInputChange}
+									className="w-full p-2 border rounded"
+								/>
+							</div>
+							<button
+								type="submit"
+								className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+							>
+								Submit
+							</button>
+						</form>
+					</div>
 				</div>
 			</div>
 
@@ -174,7 +283,7 @@ const EventHandlingExample = () => {
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 					<div>
 						<h4 className="font-semibold mb-1">WinForms/WPF Event Handler:</h4>
-						<div className="font-mono bg-gray-100 p-2 text-sm">
+						<SyntaxHighlighter language="csharp" style={vscDarkPlus}>
 							{`// XAML
 <Button x:Name="myButton" 
         Click="MyButton_Click"
@@ -185,11 +294,11 @@ private void MyButton_Click(object sender, RoutedEventArgs e)
 {
     MessageBox.Show("Button was clicked!");
 }`}
-						</div>
+						</SyntaxHighlighter>
 					</div>
 					<div>
 						<h4 className="font-semibold mb-1">React Equivalent:</h4>
-						<div className="font-mono bg-gray-100 p-2 text-sm">
+						<SyntaxHighlighter language="jsx" style={vscDarkPlus}>
 							{`function MyComponent() {
   const handleClick = () => {
     alert("Button was clicked!");
@@ -201,7 +310,7 @@ private void MyButton_Click(object sender, RoutedEventArgs e)
     </button>
   );
 }`}
-						</div>
+						</SyntaxHighlighter>
 					</div>
 				</div>
 			</div>
@@ -221,7 +330,7 @@ private void MyButton_Click(object sender, RoutedEventArgs e)
 					<li>
 						To pass parameters to event handlers, use arrow functions: onClick=
 						{"{"}
-						<code>() `{">"}` handleClick(param)</code>
+						<code>() {">"} handleClick(param)</code>
 						{"}"}
 					</li>
 					<li>React's synthetic events normalize browser differences</li>
@@ -249,7 +358,8 @@ private void MyButton_Click(object sender, RoutedEventArgs e)
 					</li>
 					<li>
 						Using onClick={"{"}handleClick(){"}"} instead of onClick={"{"}
-						handleClick{"}"} (this would call the function immediately)
+						handleClick{"}"}
+						(this would call the function immediately)
 					</li>
 					<li>Not using event.preventDefault() in form submissions</li>
 					<li>
