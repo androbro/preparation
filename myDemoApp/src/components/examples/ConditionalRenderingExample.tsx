@@ -489,8 +489,7 @@ products.map(product => (
                     <TextBlock Text="{Binding Name}" />
                     <TextBlock Text="Out of stock"
                               Visibility="{Binding InStock, 
-                                         Converter={StaticResource InverseBoolToVisibility}}" />
-                    
+															Converter={StaticResource InverseBoolToVisibility}}" />
                     <StackPanel.Style>
                         <Style TargetType="StackPanel">
                             <Style.Triggers>

@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 // This example demonstrates how React renders lists of data
 
@@ -221,7 +223,8 @@ const ListRenderingExample: React.FC = () => {
 			<div className="border p-4 rounded shadow-sm mb-6">
 				<h3 className="font-bold mb-2">Basic List Rendering Example</h3>
 				<div className="bg-gray-100 p-3 rounded mb-3 font-mono text-sm overflow-auto">
-					{`// TypeScript interface
+					<SyntaxHighlighter language="jsx" style={vscDarkPlus}>
+						{`// TypeScript interface
 interface User {
   id: number;
   name: string;
@@ -246,6 +249,7 @@ const UserList: React.FC = () => {
     </ul>
   );
 }`}
+					</SyntaxHighlighter>
 				</div>
 				<p className="text-sm text-gray-600">
 					The key prop is crucial - it helps React identify which items have
@@ -259,7 +263,8 @@ const UserList: React.FC = () => {
 					Handling Empty Lists and Conditional Rendering
 				</h3>
 				<div className="bg-gray-100 p-3 rounded mb-3 font-mono text-sm overflow-auto">
-					{`// Component with conditional rendering
+					<SyntaxHighlighter language="jsx" style={vscDarkPlus}>
+						{`// Component with conditional rendering
 const ConditionalList: React.FC<{ items: string[] }> = ({ items }) => {
   return (
     <div>
@@ -275,6 +280,7 @@ const ConditionalList: React.FC<{ items: string[] }> = ({ items }) => {
     </div>
   );
 };`}
+					</SyntaxHighlighter>
 				</div>
 				<p className="text-sm text-gray-600">
 					Always handle the empty case in your list rendering. This is similar
@@ -288,7 +294,8 @@ const ConditionalList: React.FC<{ items: string[] }> = ({ items }) => {
 					<div>
 						<h4 className="font-semibold mb-1">ASP.NET MVC Razor View:</h4>
 						<div className="font-mono bg-gray-100 p-2 text-sm">
-							{`@model List<UserViewModel>
+							<SyntaxHighlighter language="csharp" style={vscDarkPlus}>
+								{`@model List<UserViewModel>
 
 <table class="table">
     <thead>
@@ -321,12 +328,14 @@ const ConditionalList: React.FC<{ items: string[] }> = ({ items }) => {
         }
     </tbody>
 </table>`}
+							</SyntaxHighlighter>
 						</div>
 					</div>
 					<div>
 						<h4 className="font-semibold mb-1">React Equivalent:</h4>
 						<div className="font-mono bg-gray-100 p-2 text-sm">
-							{`interface User {
+							<SyntaxHighlighter language="jsx" style={vscDarkPlus}>
+								{`interface User {
   id: number;
   name: string;
   email: string;
@@ -363,6 +372,7 @@ function UserTable({ users }: { users: User[] }) {
     </table>
   );
 }`}
+							</SyntaxHighlighter>
 						</div>
 					</div>
 				</div>
@@ -379,7 +389,8 @@ function UserTable({ users }: { users: User[] }) {
 					<div>
 						<h4 className="font-semibold mb-1">WPF XAML:</h4>
 						<div className="font-mono bg-gray-100 p-2 text-sm">
-							{`<ListBox ItemsSource="{Binding Users}">
+							<SyntaxHighlighter language="jsx" style={vscDarkPlus}>
+								{`<ListBox ItemsSource="{Binding Users}">
   <ListBox.ItemTemplate>
     <DataTemplate>
       <StackPanel Orientation="Horizontal">
@@ -395,12 +406,14 @@ function UserTable({ users }: { users: User[] }) {
     </DataTemplate>
   </ListBox.ItemTemplate>
 </ListBox>`}
+							</SyntaxHighlighter>
 						</div>
 					</div>
 					<div>
 						<h4 className="font-semibold mb-1">React Equivalent:</h4>
 						<div className="font-mono bg-gray-100 p-2 text-sm">
-							{`function UserList() {
+							<SyntaxHighlighter language="jsx" style={vscDarkPlus}>
+								{`function UserList() {
   const [users, setUsers] = useState<User[]>([...]);
   
   const handleEdit = (userId: number) => {
@@ -421,6 +434,7 @@ function UserTable({ users }: { users: User[] }) {
     </ul>
   );
 }`}
+							</SyntaxHighlighter>
 						</div>
 					</div>
 				</div>
