@@ -1,4 +1,6 @@
 import React, { createContext, useContext, useState } from "react";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 // This example demonstrates React's Context API for state sharing between components
 
@@ -314,7 +316,8 @@ const ContextExample: React.FC = () => {
 			<div className="mt-8 border p-4 rounded shadow-sm mb-6">
 				<h3 className="font-bold mb-2">Creating and Using Context</h3>
 				<div className="bg-gray-100 p-3 rounded mb-3 font-mono text-sm">
-					{`// 1. Define your context and its type
+					<SyntaxHighlighter language="jsx" style={vscDarkPlus}>
+						{`// 1. Define your context and its type
 interface ThemeContextType {
   theme: 'light' | 'dark';
   toggleTheme: () => void;
@@ -366,6 +369,7 @@ function ThemedButton() {
     </button>
   );
 }`}
+					</SyntaxHighlighter>
 				</div>
 			</div>
 
@@ -377,7 +381,8 @@ function ThemedButton() {
 							.NET Core Dependency Injection:
 						</h4>
 						<div className="font-mono bg-gray-100 p-2 text-sm">
-							{`// 1. Define service interface
+							<SyntaxHighlighter language="jsx" style={vscDarkPlus}>
+								{`// 1. Define service interface
 public interface IThemeService
 {
     string CurrentTheme { get; }
@@ -417,12 +422,14 @@ public class HomeController : Controller
         return View();
     }
 }`}
+							</SyntaxHighlighter>
 						</div>
 					</div>
 					<div>
 						<h4 className="font-semibold mb-1">React Context Equivalent:</h4>
 						<div className="font-mono bg-gray-100 p-2 text-sm">
-							{`// 1. Define context type
+							<SyntaxHighlighter language="jsx" style={vscDarkPlus}>
+								{`// 1. Define context type
 interface ThemeContextType {
   theme: string;
   toggleTheme: () => void;
@@ -467,6 +474,7 @@ function HomePage() {
     </div>
   );
 }`}
+							</SyntaxHighlighter>
 						</div>
 					</div>
 				</div>
