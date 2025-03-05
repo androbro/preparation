@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 // This example demonstrates the key differences and similarities between
 // React (for web) and React Native (for mobile)
@@ -56,7 +58,8 @@ const ReactNativeComparison: React.FC = () => {
 							// React Web Example
 							<div className="space-y-3">
 								<div className="font-mono text-sm bg-gray-50 p-3 rounded">
-									{`import React, { useState } from 'react';
+									<SyntaxHighlighter language="jsx" style={vscDarkPlus}>
+										{`import React, { useState } from 'react';
 
 function ProfileCard() {
   const [likes, setLikes] = useState(0);
@@ -76,6 +79,7 @@ function ProfileCard() {
     </div>
   );
 }`}
+									</SyntaxHighlighter>
 								</div>
 								<div className="bg-gray-50 p-3 rounded">
 									<div className="border p-4 rounded max-w-xs mx-auto shadow-sm">
@@ -96,7 +100,8 @@ function ProfileCard() {
 							// React Native Example
 							<div className="space-y-3">
 								<div className="font-mono text-sm bg-gray-50 p-3 rounded">
-									{`import React, { useState } from 'react';
+									<SyntaxHighlighter language="jsx" style={vscDarkPlus}>
+										{`import React, { useState } from 'react';
 import { 
   View, Text, Image, 
   TouchableOpacity, StyleSheet 
@@ -162,6 +167,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 });`}
+									</SyntaxHighlighter>
 								</div>
 								<div className="bg-gray-50 p-3 rounded">
 									<div
@@ -339,7 +345,8 @@ const styles = StyleSheet.create({
 							ASP.NET MVC vs. Xamarin.Forms:
 						</h4>
 						<div className="font-mono bg-gray-100 p-2 text-sm">
-							{`<!-- ASP.NET MVC (Razor) -->
+							<SyntaxHighlighter language="csharp" style={vscDarkPlus}>
+								{`<!-- ASP.NET MVC (Razor) -->
 <div class="profile-card">
     <img src="~/images/avatar.png" alt="Profile" />
     <h2>@Model.Name</h2>
@@ -359,12 +366,14 @@ const styles = StyleSheet.create({
         });
     </script>
 }`}
+							</SyntaxHighlighter>
 						</div>
 					</div>
 					<div>
 						<h4 className="font-semibold mb-1">Xamarin.Forms XAML:</h4>
 						<div className="font-mono bg-gray-100 p-2 text-sm">
-							{`<!-- Xamarin.Forms (XAML) -->
+							<SyntaxHighlighter language="XML" style={vscDarkPlus}>
+								{`<!-- Xamarin.Forms (XAML) -->
 <ContentPage xmlns="...">
   <StackLayout Padding="16" 
                BackgroundColor="White">
@@ -385,6 +394,7 @@ const styles = StyleSheet.create({
             Command="{Binding LikeCommand}" />
   </StackLayout>
 </ContentPage>`}
+							</SyntaxHighlighter>
 						</div>
 					</div>
 				</div>
