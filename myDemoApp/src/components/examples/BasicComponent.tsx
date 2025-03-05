@@ -65,18 +65,6 @@ render(<Greeting name="React Learner" />);`;
 				</div>
 			</div>
 
-			<div className="mt-6 bg-yellow-50 border border-yellow-200 p-4 rounded-lg">
-				<h3 className="font-bold mb-2">.NET Comparison:</h3>
-				<p className="mt-2">
-					In React, the equivalent would be:
-					<SyntaxHighlighter language="javascript" style={vscDarkPlus}>
-						{`function Greeting(props) {
-  return <h1>Hello, {props.name}!</h1>;
-}`}
-					</SyntaxHighlighter>
-				</p>
-			</div>
-
 			<div className="mt-6 bg-purple-50 border border-purple-200 p-4 rounded-lg">
 				<h3 className="font-bold mb-2">Key Takeaways:</h3>
 				<ul className="list-disc pl-5">

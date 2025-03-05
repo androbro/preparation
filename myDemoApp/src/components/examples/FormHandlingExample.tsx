@@ -1,4 +1,6 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 // This example demonstrates React's approach to form handling with TypeScript
 
@@ -344,7 +346,8 @@ const FormHandlingExample: React.FC = () => {
 			<div className="border p-4 rounded shadow-sm mb-6">
 				<h3 className="font-bold mb-2">TypeScript Form Pattern</h3>
 				<div className="bg-gray-100 p-3 rounded mb-3 font-mono text-sm overflow-auto">
-					{`// Define interfaces for form data and errors
+					<SyntaxHighlighter language="jsx" style={vscDarkPlus}>
+						{`// Define interfaces for form data and errors
 interface UserFormData {
   username: string;
   email: string;
@@ -395,6 +398,7 @@ function TypedForm() {
     </form>
   );
 }`}
+					</SyntaxHighlighter>
 				</div>
 				<p className="text-sm text-gray-600">
 					Using TypeScript interfaces for form data creates a strongly-typed
@@ -408,7 +412,8 @@ function TypedForm() {
 					<div>
 						<h4 className="font-semibold mb-1">C# Model and Validation:</h4>
 						<div className="font-mono bg-gray-100 p-2 text-sm">
-							{`// C# Model class with validation
+							<SyntaxHighlighter language="csharp" style={vscDarkPlus}>
+								{`// C# Model class with validation
 public class UserRegistrationModel
 {
     [Required(ErrorMessage = "First name is required")]
@@ -431,40 +436,43 @@ public class UserRegistrationModel
     
     public string Comments { get; set; }
 }`}
+							</SyntaxHighlighter>
 						</div>
 					</div>
 					<div>
 						<h4 className="font-semibold mb-1">TypeScript Equivalent:</h4>
 						<div className="font-mono bg-gray-100 p-2 text-sm">
-							{`// TypeScript interfaces
-											interface UserRegistrationData {
-												firstName: string;
-												lastName: string;
-												email: string;
-												password: string;
-												role: 'developer' | 'designer' | 'manager' | 'tester';
-												notifications: boolean;
-												comments: string;
-											}
+							<SyntaxHighlighter language="jsx" style={vscDarkPlus}>
+								{`// TypeScript interfaces
+interface UserRegistrationData {
+	firstName: string;
+	lastName: string;
+	email: string;
+	password: string;
+	role: 'developer' | 'designer' | 'manager' | 'tester';
+	notifications: boolean;
+	comments: string;
+}
 
-											// Validation function (equivalent to Data Annotations)
-											function validateUser(user: UserRegistrationData): Record<string, string | undefined> {
-												const errors: Record<string, string | undefined> = {};
-												
-												if (!user.firstName)
-													errors.firstName = "First name is required";
-													
-												if (!user.lastName)
-													errors.lastName = "Last name is required";
-													
-												if (!user.email || !/^[^s@]+@[^s@]+.[^s@]+$/.test(user.email))
-													errors.email = "Invalid email format";
-													
-												if (!user.password || user.password.length < 6)
-													errors.password = "Password must be at least 6 characters";
-													
-												return errors;
-											}`}
+// Validation function (equivalent to Data Annotations)
+function validateUser(user: UserRegistrationData): Record<string, string | undefined> {
+	const errors: Record<string, string | undefined> = {};
+	
+	if (!user.firstName)
+		errors.firstName = "First name is required";
+		
+	if (!user.lastName)
+		errors.lastName = "Last name is required";
+		
+	if (!user.email || !/^[^s@]+@[^s@]+.[^s@]+$/.test(user.email))
+		errors.email = "Invalid email format";
+		
+	if (!user.password || user.password.length < 6)
+		errors.password = "Password must be at least 6 characters";
+		
+	return errors;
+}`}
+							</SyntaxHighlighter>
 						</div>
 					</div>
 				</div>
